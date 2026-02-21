@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import uvicorn
 import os
@@ -26,6 +28,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount static files for frontend
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 # Initialize global variables
 model = None
@@ -159,7 +164,10 @@ async def predict_fraud(transaction: TransactionRequest):
 
 @app.get("/")
 async def root():
-    """Root endpoint with API information"""
+    """Root endpoint - serve frontend"""
+    frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'frontend', 'index.html')
+    if os.path.exists(frontend_path):
+        return FileResponse(frontend_path)
     return {
         "message": "Fraud Detection API",
         "version": "1.0.0",
