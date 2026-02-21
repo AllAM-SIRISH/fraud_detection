@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🛡️</div>
+                <h1>Fraud Detection System</h1>
+            </div>
+            <p class="subtitle">Real-time Transaction Security Analysis</p>
+        </header>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Transaction Analysis</h2>
+                    <div class="status-indicator" id="connectionStatus">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Connecting...</span>
+                    </div>
+                </div>
+
+                <form id="transactionForm" class="transaction-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="amount">Amount ($)</label>
+                            <input type="number" id="amount" name="amount" step="0.01" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transaction_type">Transaction Type</label>
+                            <select id="transaction_type" name="transaction_type" required>
+                                <option value="">Select type...</option>
+                                <option value="purchase">Purchase</option>
+                                <option value="transfer">Transfer</option>
+                                <option value="withdrawal">Withdrawal</option>
+                                <option value="payment">Payment</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="account_age_days">Account Age (days)</label>
+                            <input type="number" id="account_age_days" name="account_age_days" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location_risk_score">Location Risk Score</label>
+                            <input type="number" id="location_risk_score" name="location_risk_score" 
+                                   step="0.001" min="0" max="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="device_risk_score">Device Risk Score</label>
+                            <input type="number" id="device_risk_score" name="device_risk_score" 
+                                   step="0.001" min="0" max="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transaction_hour">Transaction Hour</label>
+                            <input type="number" id="transaction_hour" name="transaction_hour" 
+                                   min="0" max="23" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="past_transactions_24h">Past 24h Transactions</label>
+                            <input type="number" id="past_transactions_24h" name="past_transactions_24h" 
+                                   min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="generateBtn" class="btn btn-secondary">
+                            🎲 Generate Random Transaction
+                        </button>
+                        <button type="submit" id="predictBtn" class="btn btn-primary">
+                            🔍 Analyze Transaction
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card" id="resultsCard" style="display: none;">
+                <div class="card-header">
+                    <h2>Analysis Results</h2>
+                </div>
+
+                <div class="results-content">
+                    <div class="prediction-header">
+                        <div class="prediction-status" id="predictionStatus">
+                            <span class="status-icon"></span>
+                            <span class="status-label"></span>
+                        </div>
+                        <div class="risk-level" id="riskLevel">
+                            <span class="risk-badge"></span>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Anomaly Score</div>
+                            <div class="metric-value" id="anomalyScore">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Confidence</div>
+                            <div class="metric-value" id="confidence">-</div>
+                        </div>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h3>Explanation</h3>
+                        <p id="explanation" class="explanation-text">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="loadingCard" style="display: none;">
+                <div class="loading-content">
+                    <div class="spinner"></div>
+                    <p>Analyzing transaction...</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Powered by Isolation Forest ML Model | Real-time Fraud Detection</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
